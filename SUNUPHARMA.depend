@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1752854917 source:c:\users\mfarouk01\downloads\p_sunupharma\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1752854936 source:c:\users\mfarouk01\downloads\p_sunupharma\produit.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Produit.h"
+
+1752854847 c:\users\mfarouk01\downloads\p_sunupharma\produit.h
+
