@@ -127,16 +127,22 @@ void supprimerProduit() {
     (t) ? printf("Produit supprime avec succes.\n") : printf("Produit non trouve.\n");
 }
 
-int verExpire(Produit p){
+void verExpire(Produit p){
     int a, m, j;
-    printf("Entre le date de aujourdhui");
-    scanf("%d %d %d", &a, &m, &j);
-    if (p.annee<a) return 1;
-    if (p.annee==a && p.mois<m) return 1;
-    if (p.annee == a && p.mois == m && p.jours < j) return 1;
-
+    printf("Entrez la date d'aujourd'hui (JJ MM AAAA): ");
+    scanf("%d %d %d", &j, &m, &a);
+    if (p.annee<a) {
+        printf("Le produit est expire");
+        return;
+    }
+    if (p.annee==a && p.mois<m){
+        printf("Le produit est expire");
+        return;
+    }
+    if (p.annee == a && p.mois == m && p.jours < j) {
+        printf("Le produit est expire");
+        return;
+    }
     printf("Le produit est valid");
-    return 0;
-
 }
 

@@ -12,7 +12,7 @@ void ajouterProduit();
 void afficherProduits();
 void modifierProduit();
 void supprimerProduit();
-int verExpire(Produit p);
+void verExpire();
 
 #endif
 
