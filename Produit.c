@@ -5,19 +5,31 @@
 
 Produit p;
 
-void verifier(FILE *f) {
-    if (f == NULL) {
+void verifier(FILE *f)
+{
+    if (f == NULL)
+    {
         puts("Le fichier ne peut pas etre ouvert !");
         exit(1);
     }
 }
 
-void ajouterProduit() {
+void ajouterProduit()
+{
     FILE *f = fopen("Produits.dat", "ab");
     verifier(f);
 
-    printf("Code (5 caracteres) : ");
-    scanf("%s", p.code);
+    do
+    {
+        printf("Code (5 caracteres) : ");
+        scanf("%s", p.code);
+        if (strlen(p.code) != 5)
+        {
+            printf("Le code doit etre exactement 5 caracteres.\n");
+        }
+    }
+    while (strlen(p.code) != 5);
+
     printf("Designation : ");
     scanf("%s", p.designation);
     printf("Categorie : ");
@@ -39,15 +51,17 @@ void ajouterProduit() {
     printf("Produit ajoute avec succes.\n");
 }
 
-void afficherProduits() {
+void afficherProduits()
+{
     FILE *f = fopen("Produits.dat", "rb");
     verifier(f);
 
     printf("\nListe des produits :\n");
     printf("%-10s %-15s %-15s %-10s %-10s %-15s\n",
-           "Code", "Designation", "Categorie", "Prix", "Quantite", "Date peremption");
+           "Code", "Designation", "Categorie", "Prix", "Quantite", "Date");
 
-    while (fread(&p, sizeof(Produit), 1, f)) {
+    while (fread(&p, sizeof(Produit), 1, f))
+    {
         printf("%-10s %-15s %-15s %-10.2f %-10d %04d-%02d-%02d\n",
                p.code, p.designation, p.categorie, p.prix,
                p.quantite, p.annee, p.mois, p.jours);
@@ -56,7 +70,8 @@ void afficherProduits() {
     fclose(f);
 }
 
-void modifierProduit() {
+void modifierProduit()
+{
     char code[6];
     int ver = 0;
 
@@ -68,8 +83,10 @@ void modifierProduit() {
     verifier(f);
     verifier(tp);
 
-    while (fread(&p, sizeof(Produit), 1, f)) {
-        if (strcmp(code, p.code) == 0) {
+    while (fread(&p, sizeof(Produit), 1, f))
+    {
+        if (strcmp(code, p.code) == 0)
+        {
             ver = 1;
             printf("Modification du produit [%s]\n", p.code);
             printf("Nouvelle designation : ");
@@ -99,7 +116,8 @@ void modifierProduit() {
     (ver) ? printf("Produit modifie avec succes.\n") : printf("Produit non trouve.\n");
 }
 
-void supprimerProduit() {
+void supprimerProduit()
+{
     char code[6];
     int t = 0;
 
@@ -111,8 +129,10 @@ void supprimerProduit() {
     verifier(f);
     verifier(tp);
 
-    while (fread(&p, sizeof(Produit), 1, f)) {
-        if (strcmp(code, p.code) == 0) {
+    while (fread(&p, sizeof(Produit), 1, f))
+    {
+        if (strcmp(code, p.code) == 0)
+        {
             t = 1;
             continue;
         }
@@ -127,22 +147,40 @@ void supprimerProduit() {
     (t) ? printf("Produit supprime avec succes.\n") : printf("Produit non trouve.\n");
 }
 
-void verExpire(Produit p){
-    int a, m, j;
-    printf("Entrez la date d'aujourd'hui (JJ MM AAAA): ");
-    scanf("%d %d %d", &j, &m, &a);
-    if (p.annee<a) {
-        printf("Le produit est expire");
-        return;
-    }
-    if (p.annee==a && p.mois<m){
-        printf("Le produit est expire");
-        return;
-    }
-    if (p.annee == a && p.mois == m && p.jours < j) {
-        printf("Le produit est expire");
-        return;
-    }
-    printf("Le produit est valid");
-}
+void verifUnProduit()
+{
+    char code[6];
+    int trouve = 0;
 
+    printf("Code du produit a verifier : ");
+    scanf("%s", code);
+
+    FILE *f = fopen("Produits.dat", "rb");
+    verifier(f);
+
+    printf("Entrez la date du jour (JJ MM AAAA) : ");
+    int j, m, a;
+    scanf("%d %d %d", &j, &m, &a);
+
+    while (fread(&p, sizeof(Produit), 1, f))
+    {
+        if (strcmp(p.code, code) == 0)
+        {
+            trouve = 1;
+            if (p.annee < a || (p.annee == a && p.mois < m) || (p.annee == a && p.mois == m && p.jours < j)){
+                printf("Le produit est perime.\n", p.code);
+            }else
+            {
+                printf("Le produit est encore valide.\n", p.code);
+            }
+            break;
+        }
+    }
+
+    if (!trouve)
+    {
+        printf("Produit introuvable.\n");
+    }
+
+    fclose(f);
+}
