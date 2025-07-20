@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1752967623 source:c:\users\dell 5300\documents\langagec\p_sunupharma\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utilisateurs.h"
+
+1752965331 source:c:\users\dell 5300\documents\langagec\p_sunupharma\utilisateurs.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utilisateurs.h"
+
+1752965383 c:\users\dell 5300\documents\langagec\p_sunupharma\utilisateurs.h
+
